@@ -53,7 +53,10 @@ public class ParkingLot {
 		// determine numRows and numSpotsPerRow; you can do so by
 		// writing your own code or alternatively completing the 
 		// private calculateLotDimensions(...) that I have provided
-		char[][] theArray = calculateLotDimensions(strFilename);
+		String[][] theArray = calculateLotDimensions(strFilename);
+		
+			
+		
 
 		// instantiate the lotDesign and occupancy variables!
 		// WRITE YOUR CODE HERE!
@@ -122,7 +125,7 @@ public class ParkingLot {
 		return -1; // REMOVE THIS STATEMENT AFTER IMPLEMENTING THIS METHOD		
 	}
 
-	private char[][] calculateLotDimensions(String strFilename) throws Exception {
+	private String[][] calculateLotDimensions(String strFilename) throws Exception {
 
 		Scanner scanner = new Scanner(new File(strFilename));
 		int numberOfRows = 0;
@@ -153,11 +156,11 @@ public class ParkingLot {
 					//numberOfColumns++;
 				//}
 			//}
-		System.out.println(numberOfRows);
-		System.out.println(numberOfColumns);
+		//System.out.println(numberOfRows);
+		//System.out.println(numberOfColumns);
 		
-		char[][] myArray;
-		myArray = new char[numberOfRows][numberOfColumns];
+		String[][] myArray;
+		myArray = new String[numberOfRows][numberOfColumns];
 
 
 		Scanner scanners = new Scanner(new File(strFilename));
@@ -166,22 +169,24 @@ public class ParkingLot {
 			
 			String stri = scanners.nextLine();
 			// WRITE YOUR CODE HERE!
-			if (!((stri.startsWith("N"))||(stri.startsWith("E"))||(stri.startsWith("S"))||(stri.startsWith("R"))||(stri.startsWith("L")))) {
+				if (!((stri.startsWith("N"))||(stri.startsWith("E"))||(stri.startsWith("S"))||(stri.startsWith("R"))||(stri.startsWith("L")))) {
 				
-				continue;
-			}
-			else{
-				//System.out.println(stri.replaceAll("\\s",""));
-				stri = stri.replaceAll("\\s","");
-				stri = stri.replaceAll(",","");
-				for (int i=0; i<numberOfColumns; i++){
-					myArray[numberOfRowsOne][i] = stri.charAt(i);
+					continue;
 				}
+				else{
+					//System.out.println(stri.replaceAll("\\s",""));
+					stri = stri.replaceAll("\\s","");
+					stri = stri.replaceAll(",","");
+					for (int i=0; i<numberOfColumns; i++){
+						char myArrayString = stri.charAt(i);
+						String myArrayString1 = String.valueOf(myArrayString);
+						myArray[numberOfRowsOne][i] = myArrayString1;
+					}
 				
-				numberOfRowsOne++;
+					numberOfRowsOne++;
 				
-			}
-			}
+				}
+		}
 			//for (int i=0; i<numberOfRows; i++){
 				//for (int j=0; j<numberOfColumns; j++){
 					//System.out.println(myArray[i][j]);
@@ -276,6 +281,8 @@ public class ParkingLot {
 		System.out.println("Number of cars currently parked in the lot: " + lot.getTotalOccupancy());
 
 		System.out.print(lot);
+
+		//calculateLotDimensions(parking.inf);
 
 	}
 }
