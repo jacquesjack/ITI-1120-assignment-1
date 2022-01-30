@@ -87,7 +87,16 @@ public class ParkingLot {
 		// populate lotDesign and occupancy; you can do so by
 		// writing your own code or alternatively completing the 
 		// private populateFromFile(...) that I have provided
-		populateFromFile(strFilename);
+		String[][] theArray1;
+		theArray1 = populateFromFile(strFilename);
+		int rows1 = theArray.length;
+		int spotRows1 = theArray[0].length;
+
+		for (int i = 0; i < rows1; i++){
+			for(int j = 0; i < spotRows1; j++){
+				
+			}
+		}
 	}
 
 	/**
