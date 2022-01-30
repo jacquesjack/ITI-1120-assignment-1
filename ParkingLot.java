@@ -221,22 +221,27 @@ public class ParkingLot {
 		
 	}
 
-	private void populateFromFile(String strFilename) throws Exception {
+	private String[][] populateFromFile(String strFilename) throws Exception {
 
 		Scanner scanner = new Scanner(new File(strFilename));
 
 		// YOU MAY NEED TO DEFINE SOME LOCAL VARIABLES HERE!
 
 		// while loop for reading the lot design
+		String[][] myArray1;
 		while (scanner.hasNext()) {
 			String str = scanner.nextLine();
-			//if ((stri.startsWith("N"))||(stri.startsWith("E"))||(stri.startsWith("S"))||(stri.startsWith("R"))||(stri.startsWith("L")) || (stri.startsWith("#"))) {
+			if ((stri.startsWith("N"))||(stri.startsWith("E"))||(stri.startsWith("S"))||(stri.startsWith("R"))||(stri.startsWith("L")) || (stri.startsWith("#"))) {
 				
-				//	continue;
-				//}
-			//else{
+					continue;
+				}
+			else{
+				str = stri.replaceAll("\\s","");
+				str = stri.replaceAll(",","");
+				for(int i = 0; i < str.length(); i++){
 
-			//}
+				}
+			}
 		}
 
 		// while loop for reading occupancy data
