@@ -229,21 +229,17 @@ public class ParkingLot {
 
 		// while loop for reading the lot design
 		String[][] myArray1;
+		int numberOfRows = 0;
 		while (scanner.hasNext()) {
 			String str = scanner.nextLine();
-			if ((str.startsWith("N"))||(str.startsWith("E"))||(str.startsWith("S"))||(str.startsWith("R"))||(str.startsWith("L")) || (str.startsWith("#"))) {
-<<<<<<< HEAD
-				
-=======
->>>>>>> 054fe67bfdf84c88d30b2ca0320934453c1bc265
-					continue;
+			if ((str.startsWith("N"))||(str.startsWith("E"))||(str.startsWith("S"))||(str.startsWith("R"))||(str.startsWith("L")) || (str.startsWith("#"))) 
+				continue;
 				}
 			else{
 				str = str.replaceAll("\\s","");
 				str = str.replaceAll(",","");
-				for(int i = 0; i < str.length(); i++){
-
-				}
+				numberOfRows++
+				
 			}
 		}
 
