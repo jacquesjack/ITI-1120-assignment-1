@@ -231,13 +231,13 @@ public class ParkingLot {
 		String[][] myArray1;
 		while (scanner.hasNext()) {
 			String str = scanner.nextLine();
-			if ((stri.startsWith("N"))||(stri.startsWith("E"))||(stri.startsWith("S"))||(stri.startsWith("R"))||(stri.startsWith("L")) || (stri.startsWith("#"))) {
+			if ((str.startsWith("N"))||(str.startsWith("E"))||(str.startsWith("S"))||(str.startsWith("R"))||(str.startsWith("L")) || (str.startsWith("#"))) {
 				
 					continue;
 				}
 			else{
-				str = stri.replaceAll("\\s","");
-				str = stri.replaceAll(",","");
+				str = str.replaceAll("\\s","");
+				str = str.replaceAll(",","");
 				for(int i = 0; i < str.length(); i++){
 
 				}
