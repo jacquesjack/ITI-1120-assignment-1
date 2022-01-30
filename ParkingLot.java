@@ -65,6 +65,23 @@ public class ParkingLot {
 		// WRITE YOUR CODE HERE!
 		lotDesign = new CarType[rows][spotRows];
 
+		for (int i = 0; i < rows ; i++){
+			for (int j = 0; j < spotRows; j++){
+				if (theArray[i][j] == "E"){
+					lotDesign[i][j] == CarType.ELECTRIC;
+				}
+				else if (theArray[i][j] == "S"){
+					lotDesign[i][j] == CarType.SMALL;
+				}
+				else if (theArray[i][j] == "R"){
+					lotDesign[i][j] == CarType.REGULAR;
+				}
+				else{
+					lotDesign[i][j] == CarType.LARGE;
+				}
+			}
+		}
+
 		occupancy = new Car[rows][spotRows];
 
 		// populate lotDesign and occupancy; you can do so by
@@ -213,7 +230,13 @@ public class ParkingLot {
 		// while loop for reading the lot design
 		while (scanner.hasNext()) {
 			String str = scanner.nextLine();
-			// WRITE YOUR CODE HERE!
+			//if ((stri.startsWith("N"))||(stri.startsWith("E"))||(stri.startsWith("S"))||(stri.startsWith("R"))||(stri.startsWith("L")) || (stri.startsWith("#"))) {
+				
+				//	continue;
+				//}
+			//else{
+
+			//}
 		}
 
 		// while loop for reading occupancy data
