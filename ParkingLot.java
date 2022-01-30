@@ -93,9 +93,7 @@ public class ParkingLot {
 		int spotRows1 = theArray[0].length;
 
 		for (int i = 0; i < rows1; i++){
-			for(int j = 0; i < spotRows1; j++){
-				
-			}
+			
 		}
 	}
 
