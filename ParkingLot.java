@@ -54,12 +54,18 @@ public class ParkingLot {
 		// writing your own code or alternatively completing the 
 		// private calculateLotDimensions(...) that I have provided
 		String[][] theArray = calculateLotDimensions(strFilename);
+
+		int rows = theArray.length;
+		int spotRows = theArray[0].length;
 		
 			
 		
 
 		// instantiate the lotDesign and occupancy variables!
 		// WRITE YOUR CODE HERE!
+		lotDesign = new CarType[rows][spotRows];
+
+		occupancy = new Car[rows][spotRows];
 
 		// populate lotDesign and occupancy; you can do so by
 		// writing your own code or alternatively completing the 
