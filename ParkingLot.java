@@ -68,16 +68,16 @@ public class ParkingLot {
 		for (int i = 0; i < rows ; i++){
 			for (int j = 0; j < spotRows; j++){
 				if (theArray[i][j] == "E"){
-					lotDesign[i][j] == CarType.ELECTRIC;
+					lotDesign[i][j] = CarType.ELECTRIC;
 				}
 				else if (theArray[i][j] == "S"){
-					lotDesign[i][j] == CarType.SMALL;
+					lotDesign[i][j] = CarType.SMALL;
 				}
 				else if (theArray[i][j] == "R"){
-					lotDesign[i][j] == CarType.REGULAR;
+					lotDesign[i][j] = CarType.REGULAR;
 				}
-				else{
-					lotDesign[i][j] == CarType.LARGE;
+				else if (theArray[i][j] == "L"){
+					lotDesign[i][j] = CarType.LARGE;
 				}
 			}
 		}
@@ -200,6 +200,7 @@ public class ParkingLot {
 					//System.out.println(stri.replaceAll("\\s",""));
 					stri = stri.replaceAll("\\s","");
 					stri = stri.replaceAll(",","");
+					
 					for (int i=0; i<numberOfColumns; i++){
 						char myArrayString = stri.charAt(i);
 						String myArrayString1 = String.valueOf(myArrayString);
@@ -228,39 +229,46 @@ public class ParkingLot {
 		// YOU MAY NEED TO DEFINE SOME LOCAL VARIABLES HERE!
 
 		// while loop for reading the lot design
+		int numberOfColumns1 = 0;
 		String[][] myArray1;
 		int numberOfRows = 0;
 		while (scanner.hasNext()) {
 			String str = scanner.nextLine();
-			if ((str.startsWith("N"))||(str.startsWith("E"))||(str.startsWith("S"))||(str.startsWith("R"))||(str.startsWith("L")) || (str.startsWith("#"))) 
+			if ((str.startsWith("N"))||(str.startsWith("E"))||(str.startsWith("S"))||(str.startsWith("R"))||(str.startsWith("L")) || (str.startsWith("#"))){
 				continue;
 				}
-			else{
+			else {
 				str = str.replaceAll("\\s","");
 				str = str.replaceAll(",","");
-				numberOfRows++
+				numberOfRows++;
+				numberOfColumns1 = str.length();
 				
 			}
 		}
-
+		myArray1 = new String[numberOfRows][numberOfColumns1];
 		// while loop for reading occupancy data
 		while (scanner.hasNext()) {
 			String str = scanner.nextLine();
-			if ((str.startsWith("N"))||(str.startsWith("E"))||(str.startsWith("S"))||(str.startsWith("R"))||(str.startsWith("L")) || (str.startsWith("#"))) 
+			if ((str.startsWith("N"))||(str.startsWith("E"))||(str.startsWith("S"))||(str.startsWith("R"))||(str.startsWith("L")) || (str.startsWith("#"))){ 
 				continue;
 				}
 			else{
 				str = str.replaceAll("\\s","");
 				str = str.replaceAll(",","");
+				System.out.println(str);
 				for(int i = 0; i < numberOfRows; i++){
 					for (int j = 0; j < str.length(); j++){
-						myArray1[i][j] = str[j]
+						char myArrayString2 = str.charAt(j);
+						String myArrayString3 = String.valueOf(myArrayString2);						
+						myArray1[i][j] = myArrayString3;
 					}
 					
 				}
 			}
 
-		scanner.close();
+		}scanner.close();
+
+	return myArray1;
 	}
 
 	/**
@@ -327,6 +335,7 @@ public class ParkingLot {
 		System.out.print(lot);
 
 		//calculateLotDimensions(parking.inf);
+		//populateFromFile("parking.inf");
 
 	}
 }
