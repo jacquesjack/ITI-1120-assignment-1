@@ -67,17 +67,26 @@ public class ParkingLot {
 
 		for (int i = 0; i < rows ; i++){
 			for (int j = 0; j < spotRows; j++){
-				if (theArray[i][j] == "E"){
+
+				System.out.println(theArray[i][j]);
+
+				if (theArray[i][j].equals("E")){
+
+					//System.out.println("TEST");
+
 					lotDesign[i][j] = CarType.ELECTRIC;
 				}
-				else if (theArray[i][j] == "S"){
+				else if (theArray[i][j].equals("S")){
 					lotDesign[i][j] = CarType.SMALL;
 				}
-				else if (theArray[i][j] == "R"){
+				else if (theArray[i][j].equals("R")){
 					lotDesign[i][j] = CarType.REGULAR;
 				}
-				else if (theArray[i][j] == "L"){
+				else if (theArray[i][j].equals("L")){
 					lotDesign[i][j] = CarType.LARGE;
+				}
+				else if (theArray[i][j].equals("N")){
+					lotDesign[i][j] = CarType.NA;
 				}
 			}
 		}
@@ -87,14 +96,71 @@ public class ParkingLot {
 		// populate lotDesign and occupancy; you can do so by
 		// writing your own code or alternatively completing the 
 		// private populateFromFile(...) that I have provided
-		String[][] theArray1;
-		theArray1 = populateFromFile(strFilename);
-		int rows1 = theArray.length;
-		int spotRows1 = theArray[0].length;
 
-		for (int i = 0; i < rows1; i++){
-			
+		// making an array to store all of the cars that will evetully go into the occupancy array
+		String[] stringArrayOfCars;
+		stringArrayOfCars = populateFromFile(strFilename);
+		int length = stringArrayOfCars.length;
+
+		Car[] arrayOfCars = new Car[length];
+
+		//using a loop to make the Car objects
+
+		for(int i = 0; i < length; i++){
+			String information = stringArrayOfCars[i];
+			String subString = information.substring(3);
+			char typeOfCarChar = information.charAt(2);
+			String typeOfCarString = String.valueOf(typeOfCarChar);
+			CarType typeOfCar;
+
+			// converting the string to a Cartype so that I can create Car objects
+
+			if (typeOfCarString == "E"){
+					typeOfCar = CarType.ELECTRIC;
+				}
+				else if (typeOfCarString == "S"){
+					typeOfCar = CarType.SMALL;
+				}
+				else if (typeOfCarString == "R"){
+					typeOfCar = CarType.REGULAR;
+				}
+				else {
+					typeOfCar = CarType.LARGE;
+				}
+
+
+
+			arrayOfCars[i] = new Car(typeOfCar,subString);
 		}
+
+		
+		// now that arrayOfCars is complete, another loop is used to put them where they belong in the occupancy array
+		for (int i = 0; i < length ; i++){
+			//System.out.println(stringArrayOfCars[i]);
+
+			char whichRow = stringArrayOfCars[i].charAt(0);
+			char whichColumn = stringArrayOfCars[i].charAt(1);
+
+			//System.out.println(whichRow);
+			//System.out.println(whichColumn);
+
+
+			int  whichRowInt = Character.getNumericValue(whichRow);
+			int  whichColumnInt = Character.getNumericValue(whichColumn);
+
+			//System.out.println("Break");
+
+
+			System.out.println(whichRowInt);
+			System.out.println(whichColumnInt);
+
+			//System.out.println(whichRowInt + " " + whichColumnInt);
+
+			occupancy[whichRowInt][whichColumnInt] = arrayOfCars[i];
+		}
+
+
+		
 	}
 
 	/**
@@ -106,6 +172,7 @@ public class ParkingLot {
 	 */
 	public void park(int i, int j, Car c) {
 		// WRITE YOUR CODE HERE!
+		occupancy[i][j] = c;
 	}
 
 	/**
@@ -118,8 +185,10 @@ public class ParkingLot {
 	 */
 	public Car remove(int i, int j) {
 		// WRITE YOUR CODE HERE!
-		return null; // REMOVE THIS STATEMENT AFTER IMPLEMENTING THIS METHOD
-
+		if ( i < 0 || i > occupancy.length || j < 0 || j > occupancy[0].length || occupancy[i][j] == null){
+			return null;
+		}
+		return occupancy[i][j];
 	}
 
 	/**
@@ -132,8 +201,50 @@ public class ParkingLot {
 	 */
 	public boolean canParkAt(int i, int j, Car c) {
 		// WRITE YOUR CODE HERE!
-		return false; // REMOVE THIS STATEMENT AFTER IMPLEMENTING THIS METHOD
+		if ( i < 0 || i > occupancy.length || j < 0 || j > occupancy[0].length){
+			return false; //checking to see if i and j are out of range
+		}
+		if (c == null){
+			return false;
+		}
+		if (occupancy[i][j] != null){
+			return false;
+		}
 
+		if (c.getType() == CarType.ELECTRIC){
+			if (lotDesign[i][j] == CarType.NA){
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+		else if (c.getType() == CarType.SMALL){
+			if (lotDesign[i][j] != CarType.ELECTRIC || lotDesign[i][j] != CarType.NA){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else if (c.getType() == CarType.REGULAR){
+			if (lotDesign[i][j] == CarType.REGULAR || lotDesign[i][j] == CarType.LARGE){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else if (c.getType() == CarType.LARGE){
+			if (lotDesign[i][j] == CarType.LARGE){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		
+		return false; //remove later??
 	}
 
 	/**
@@ -142,7 +253,26 @@ public class ParkingLot {
 	 */
 	public int getTotalCapacity() {
 		// WRITE YOUR CODE HERE!
-		return -1; // REMOVE THIS STATEMENT AFTER IMPLEMENTING THIS METHOD
+		int counter = 0;
+
+		//System.out.println(lotDesign.length - 1);
+		//System.out.println(lotDesign[0].length - 1);
+
+
+		for (int i = 0; i < (lotDesign.length ) ; i++){
+			for (int j = 0; j < (lotDesign[0].length ) ; j++){
+
+				//System.out.println(i);
+				//System.out.println(j);
+
+				if (lotDesign[i][j] != CarType.NA){
+					
+					counter++;
+				}
+			}
+		}
+		return counter;
+		//return -1; // REMOVE THIS STATEMENT AFTER IMPLEMENTING THIS METHOD
 
 	}
 
@@ -152,7 +282,20 @@ public class ParkingLot {
 	 */
 	public int getTotalOccupancy() {
 		// WRITE YOUR CODE HERE!
-		return -1; // REMOVE THIS STATEMENT AFTER IMPLEMENTING THIS METHOD		
+		int counter = 1;
+
+		//System.out.println(occupancy.length);
+		//System.out.println(occupancy[0].length);
+
+		for (int i = 0; i < occupancy.length - 1 ; i++){
+			for (int j = 0; j < occupancy[0].length - 1 ; j++){
+				if (occupancy[i][j] != null){
+					counter++;
+				}
+			}
+		}
+		return counter;
+		//return -1; // REMOVE THIS STATEMENT AFTER IMPLEMENTING THIS METHOD		
 	}
 
 	private String[][] calculateLotDimensions(String strFilename) throws Exception {
@@ -229,51 +372,63 @@ public class ParkingLot {
 		
 	}
 
-	private String[][] populateFromFile(String strFilename) throws Exception {
+	private String[] populateFromFile(String strFilename) throws Exception {
 
-		Scanner scanner = new Scanner(new File(strFilename));
+	Scanner scanner = new Scanner(new File(strFilename));
 
 		// YOU MAY NEED TO DEFINE SOME LOCAL VARIABLES HERE!
 
 		// while loop for reading the lot design
-		int numberOfColumns1 = 0;
-		String[][] myArray1;
+		
+		String[] myArray1;
 		int numberOfRows = 0;
+		//System.out.println("begin");
 		while (scanner.hasNext()) {
 			String str = scanner.nextLine();
-			if ((str.startsWith("N"))||(str.startsWith("E"))||(str.startsWith("S"))||(str.startsWith("R"))||(str.startsWith("L")) || (str.startsWith("#"))){
+			if (!( ((str.startsWith("1"))||(str.startsWith("2"))||(str.startsWith("3"))||(str.startsWith("4"))||(str.startsWith("5")) || (str.startsWith("6")) || (str.startsWith("7")) || (str.startsWith("8")) || (str.startsWith("9")) || (str.startsWith("0"))))){
+				
 				continue;
 				}
 			else {
-				str = str.replaceAll("\\s","");
-				str = str.replaceAll(",","");
+				
 				numberOfRows++;
-				numberOfColumns1 = str.length();
+				
 				
 			}
 		}
-		myArray1 = new String[numberOfRows][numberOfColumns1];
+		
+		scanner.close();
+		
+		myArray1 = new String[numberOfRows];
 		// while loop for reading occupancy data
-		while (scanner.hasNext()) {
-			String str = scanner.nextLine();
-			if ((str.startsWith("N"))||(str.startsWith("E"))||(str.startsWith("S"))||(str.startsWith("R"))||(str.startsWith("L")) || (str.startsWith("#"))){ 
+
+		Scanner scanners = new Scanner(new File(strFilename));
+		int increment = 0;
+		while (scanners.hasNext()) {
+			String stri = scanners.nextLine();
+			if (!( ((stri.startsWith("1"))||(stri.startsWith("2"))||(stri.startsWith("3"))||(stri.startsWith("4"))||(stri.startsWith("5")) || (stri.startsWith("6")) || (stri.startsWith("7")) || (stri.startsWith("8")) || (stri.startsWith("9")) || (stri.startsWith("0"))))){ 
+				
 				continue;
 				}
 			else{
-				str = str.replaceAll("\\s","");
-				str = str.replaceAll(",","");
-				System.out.println(str);
-				for(int i = 0; i < numberOfRows; i++){
-					for (int j = 0; j < str.length(); j++){
-						char myArrayString2 = str.charAt(j);
-						String myArrayString3 = String.valueOf(myArrayString2);						
-						myArray1[i][j] = myArrayString3;
-					}
+				stri = stri.replaceAll("\\s","");
+				stri = stri.replaceAll(",","");
+				myArray1[increment] = stri;
+				increment++;
+				//for(int i = 0; i < numberOfRows; i++){
+					//myArray1[i] = stri;
+
+					//for (int j = 0; j < str.length(); j++){
+					//	char myArrayString2 = str.charAt(j);
+					//	String myArrayString3 = String.valueOf(myArrayString2);						
+					//	myArray1[i][j] = myArrayString3;
+					//}
 					
-				}
+				//}
 			}
 
-		}scanner.close();
+		}
+		scanners.close();
 
 	return myArray1;
 	}
