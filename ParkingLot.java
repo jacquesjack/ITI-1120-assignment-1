@@ -155,8 +155,13 @@ public class ParkingLot {
 			System.out.println(whichColumnInt);
 
 			//System.out.println(whichRowInt + " " + whichColumnInt);
-
-			occupancy[whichRowInt][whichColumnInt] = arrayOfCars[i];
+			if (canParkAt(whichRowInt,whichColumnInt,arrayOfCars[i])){
+				occupancy[whichRowInt][whichColumnInt] = arrayOfCars[i];
+			}
+			else{
+				System.out.println("Car " + arrayOfCars[i].getType() +"(" + arrayOfCars[i].getPlateNum() +") cannot be parked at" + "(" + whichRowInt + "," + whichColumnInt +")" );
+			}
+			//occupancy[whichRowInt][whichColumnInt] = arrayOfCars[i];
 		}
 
 
