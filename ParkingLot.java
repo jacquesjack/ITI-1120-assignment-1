@@ -68,7 +68,7 @@ public class ParkingLot {
 		for (int i = 0; i < rows ; i++){
 			for (int j = 0; j < spotRows; j++){
 
-				System.out.println(theArray[i][j]);
+				//System.out.println(theArray[i][j]);
 
 				if (theArray[i][j].equals("E")){
 
@@ -110,18 +110,24 @@ public class ParkingLot {
 			String information = stringArrayOfCars[i];
 			String subString = information.substring(3);
 			char typeOfCarChar = information.charAt(2);
+
+			//System.out.println(typeOfCarChar);
+
 			String typeOfCarString = String.valueOf(typeOfCarChar);
+
+			//System.out.println(typeOfCarString);
+
 			CarType typeOfCar;
 
 			// converting the string to a Cartype so that I can create Car objects
 
-			if (typeOfCarString == "E"){
+			if (typeOfCarString.equals("E")){
 					typeOfCar = CarType.ELECTRIC;
 				}
-				else if (typeOfCarString == "S"){
+				else if (typeOfCarString.equals("S")){
 					typeOfCar = CarType.SMALL;
 				}
-				else if (typeOfCarString == "R"){
+				else if (typeOfCarString.equals("R")){
 					typeOfCar = CarType.REGULAR;
 				}
 				else {
@@ -151,8 +157,10 @@ public class ParkingLot {
 			//System.out.println("Break");
 
 
-			System.out.println(whichRowInt);
-			System.out.println(whichColumnInt);
+			//System.out.println(whichRowInt);
+			//System.out.println(whichColumnInt);
+
+			//System.out.println(arrayOfCars[i]);
 
 			//System.out.println(whichRowInt + " " + whichColumnInt);
 			if (canParkAt(whichRowInt,whichColumnInt,arrayOfCars[i])){
@@ -206,14 +214,20 @@ public class ParkingLot {
 	 */
 	public boolean canParkAt(int i, int j, Car c) {
 		// WRITE YOUR CODE HERE!
-		if ( i < 0 || i > occupancy.length || j < 0 || j > occupancy[0].length){
+		//System.out.println(occupancy.length);
+
+		//System.out.println(occupancy[0].length);
+
+
+		if ( (i < 0) || (i > occupancy.length - 1) || (j < 0) || (j > occupancy[0].length - 1)){
+			//System.out.println("TEST");
 			return false; //checking to see if i and j are out of range
 		}
 		if (c == null){
 			return false;
 		}
 		if (occupancy[i][j] != null){
-			return false;
+			return false; // checks if there is a car already  parked there
 		}
 
 		if (c.getType() == CarType.ELECTRIC){
@@ -287,13 +301,13 @@ public class ParkingLot {
 	 */
 	public int getTotalOccupancy() {
 		// WRITE YOUR CODE HERE!
-		int counter = 1;
+		int counter = 0;
 
 		//System.out.println(occupancy.length);
 		//System.out.println(occupancy[0].length);
 
-		for (int i = 0; i < occupancy.length - 1 ; i++){
-			for (int j = 0; j < occupancy[0].length - 1 ; j++){
+		for (int i = 0; i < occupancy.length  ; i++){
+			for (int j = 0; j < occupancy[0].length  ; j++){
 				if (occupancy[i][j] != null){
 					counter++;
 				}

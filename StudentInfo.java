@@ -18,7 +18,7 @@ public class StudentInfo {
         System.out.println("************************************************************");
         System.out.println("*Raphael Daoust-Reid (300026960)                           *");
         System.out.println("*                                                          *");
-        System.out.println("*                                                          *");
+        System.out.println("*Jacques O'Gallagher-Roy (300229209)                       *");
         System.out.println("*                                                          *");
         System.out.println("************************************************************");
         System.out.println();
