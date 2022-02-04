@@ -90,7 +90,6 @@ public class ParkingLot {
 				}
 			}
 		}
-
 		occupancy = new Car[rows][spotRows];
 
 		// populate lotDesign and occupancy; you can do so by
@@ -167,7 +166,7 @@ public class ParkingLot {
 				occupancy[whichRowInt][whichColumnInt] = arrayOfCars[i];
 			}
 			else{
-				System.out.println("Car " + arrayOfCars[i].getType() +"(" + arrayOfCars[i].getPlateNum() +") cannot be parked at" + "(" + whichRowInt + "," + whichColumnInt +")" );
+				System.out.println("Car " + Util.getLabelByCarType(arrayOfCars[i].getType()) +"(" + arrayOfCars[i].getPlateNum() +") cannot be parked at" + "(" + whichRowInt + "," + whichColumnInt +")" );
 			}
 			//occupancy[whichRowInt][whichColumnInt] = arrayOfCars[i];
 		}
@@ -462,12 +461,13 @@ public class ParkingLot {
 		// change it for the assignment.
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("==== Lot Design ====").append(System.lineSeparator());
-
 		for (int i = 0; i < lotDesign.length; i++) {
 			for (int j = 0; j < lotDesign[0].length; j++) {
 				buffer.append((lotDesign[i][j] != null) ? Util.getLabelByCarType(lotDesign[i][j])
 						: Util.getLabelByCarType(CarType.NA));
-				if (j < numSpotsPerRow - 1) {
+				//buffer.append(", ");
+
+				if (j != (lotDesign[i].length-1)) { 
 					buffer.append(", ");
 				}
 			}
