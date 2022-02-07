@@ -184,7 +184,11 @@ public class ParkingLot {
 	 */
 	public void park(int i, int j, Car c) {
 		// WRITE YOUR CODE HERE!
-		occupancy[i][j] = c;
+		if (canParkAt(i,j,c)){
+			occupancy[i][j] = c;
+		}else{
+			System.out.println("Cannot park the car here");
+		}
 	}
 
 	/**
